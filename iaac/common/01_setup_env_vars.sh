@@ -23,3 +23,6 @@ API_APP_SERVICE_PLAN="petstore-api"
 # Traffic Manager
 TRAFFIC_MANAGER_PROFILE="petstore-web-app"
 
+# Container App Service
+CONTAINER_APP_ENV="petstore-app-env"
+
