@@ -1,0 +1,5 @@
+{
+  "PETSTOREPETSERVICE_URL": "https://petstore-pet-svc-eastus.azurewebsites.net",
+  "PETSTOREPRODUCTSERVICE_URL": "https://petstore-product-svc-eastus.azurewebsites.net",
+  "PETSTOREORDERSERVICE_URL": "https://petstore-order-svc-eastus.azurewebsites.net"
+}
