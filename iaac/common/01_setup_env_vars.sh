@@ -26,3 +26,6 @@ TRAFFIC_MANAGER_PROFILE="petstore-web-app"
 # Container App Service
 CONTAINER_APP_ENV="petstore-app-env"
 
+# App Insights
+APP_INSIGHTS="petstore-app-insights"
+APP_INSIGHTS_CONNECTION_STRING="<to_be_added>"

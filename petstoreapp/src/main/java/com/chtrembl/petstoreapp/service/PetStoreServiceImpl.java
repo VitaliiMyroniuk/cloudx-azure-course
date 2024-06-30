@@ -122,6 +122,11 @@ public class PetStoreServiceImpl implements PetStoreService {
 		List<Product> products = new ArrayList<>();
 
 		try {
+			sessionUser.getTelemetryClient().trackEvent(
+					String.format("PetStoreApp user %s is requesting products", this.sessionUser.getName()),
+					this.sessionUser.getCustomEventProperties(),
+					null
+			);
 			Consumer<HttpHeaders> consumer = it -> it.addAll(this.webRequest.getHeaders());
 			products = this.productServiceWebClient.get()
 					.uri("petstoreproductservice/v2/product/findByStatus?status=available")
@@ -148,6 +153,8 @@ public class PetStoreServiceImpl implements PetStoreService {
 				products = products.stream().filter(product -> category.equals(product.getCategory().getName())
 						&& product.getTags().toString().contains("small")).collect(Collectors.toList());
 			}
+			sessionUser.getTelemetryClient().trackMetric("Products Number", products.size());
+			logger.info("Number of products fetched: {}", products.size());
 			return products;
 		} catch (
 
