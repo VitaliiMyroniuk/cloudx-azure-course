@@ -29,3 +29,11 @@ CONTAINER_APP_ENV="petstore-app-env"
 # App Insights
 APP_INSIGHTS="petstore-app-insights"
 APP_INSIGHTS_CONNECTION_STRING="<to_be_added>"
+
+# Blob Storage
+BLOB_STORAGE_ACCOUNT="petstorestorage"
+BLOB_STORAGE_ORDERS_CONTAINER="orders"
+BLOB_STORAGE_DATA_CONTRIBUTOR_ROLE="Storage Blob Data Contributor"
+
+# Function App
+FUNCTION_APP="petstore-order-items-reserver"

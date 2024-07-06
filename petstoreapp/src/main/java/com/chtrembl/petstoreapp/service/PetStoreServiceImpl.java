@@ -4,6 +4,8 @@ package com.chtrembl.petstoreapp.service;
  * Implementation for service calls to the APIM/AKS
  */
 
+import static com.chtrembl.petstoreapp.model.Order.StatusEnum.PLACED;
+
 import com.chtrembl.petstoreapp.model.Category;
 import com.chtrembl.petstoreapp.model.ContainerEnvironment;
 import com.chtrembl.petstoreapp.model.Order;
@@ -20,7 +22,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -194,6 +195,7 @@ public class PetStoreServiceImpl implements PetStoreService {
 
 			updatedOrder.setId(this.sessionUser.getSessionId());
 			updatedOrder.setEmail(this.sessionUser.getEmail());
+			updatedOrder.setStatus(PLACED);
 
 			if (completeOrder) {
 				updatedOrder.setComplete(true);
