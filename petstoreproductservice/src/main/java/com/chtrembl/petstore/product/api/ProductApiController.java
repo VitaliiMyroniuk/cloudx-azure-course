@@ -1,13 +1,18 @@
 package com.chtrembl.petstore.product.api;
 
+import com.chtrembl.petstore.product.model.ContainerEnvironment;
+import com.chtrembl.petstore.product.model.ModelApiResponse;
+import com.chtrembl.petstore.product.model.Product;
+import com.chtrembl.petstore.product.service.ProductService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.annotations.ApiParam;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.List;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -25,15 +30,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.chtrembl.petstore.product.model.ContainerEnvironment;
-import com.chtrembl.petstore.product.model.DataPreload;
-import com.chtrembl.petstore.product.model.ModelApiResponse;
-import com.chtrembl.petstore.product.model.Product;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import io.swagger.annotations.ApiParam;
-
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2021-12-21T10:17:09.908-05:00")
 
 @Controller
@@ -48,16 +44,10 @@ public class ProductApiController implements ProductApi {
 
 	@Autowired
 	private ContainerEnvironment containerEnvironment;
+	@Autowired
+	private ProductService productService;
 
 	@Autowired
-	private DataPreload dataPreload;
-
-	@Override
-	public DataPreload getBeanToBeAutowired() {
-		return dataPreload;
-	}
-
-	@org.springframework.beans.factory.annotation.Autowired
 	public ProductApiController(ObjectMapper objectMapper, NativeWebRequest request) {
 		this.objectMapper = objectMapper;
 		this.request = request;
@@ -101,7 +91,8 @@ public class ProductApiController implements ProductApi {
 					"PetStoreProductService incoming GET request to petstoreproductservice/v2/pet/findProductsByStatus?status=%s",
 					status));
 			try {
-				String petsJSON = new ObjectMapper().writeValueAsString(this.getPreloadedProducts());
+				List<Product> pets = productService.getProducts(status);
+				String petsJSON = objectMapper.writeValueAsString(pets);
 				ApiUtil.setResponse(request, "application/json", petsJSON);
 				return new ResponseEntity<>(HttpStatus.OK);
 			} catch (JsonProcessingException e) {

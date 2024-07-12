@@ -1,5 +1,6 @@
 package com.chtrembl.petstore.pet.api;
 
+import com.chtrembl.petstore.pet.service.PetService;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -26,7 +27,6 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.chtrembl.petstore.pet.model.ContainerEnvironment;
-import com.chtrembl.petstore.pet.model.DataPreload;
 import com.chtrembl.petstore.pet.model.ModelApiResponse;
 import com.chtrembl.petstore.pet.model.Pet;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -47,16 +47,10 @@ public class PetApiController implements PetApi {
 
 	@Autowired
 	private ContainerEnvironment containerEnvironment;
+	@Autowired
+	private PetService petService;
 
 	@Autowired
-	private DataPreload dataPreload;
-
-	@Override
-	public DataPreload getBeanToBeAutowired() {
-		return dataPreload;
-	}
-
-	@org.springframework.beans.factory.annotation.Autowired
 	public PetApiController(ObjectMapper objectMapper, NativeWebRequest request) {
 		this.objectMapper = objectMapper;
 		this.request = request;
@@ -100,7 +94,8 @@ public class PetApiController implements PetApi {
 					"PetStorePetService incoming GET request to petstorepetservice/v2/pet/findPetsByStatus?status=%s",
 					status));
 			try {
-				String petsJSON = new ObjectMapper().writeValueAsString(this.getPreloadedPets());
+				List<Pet> pets = petService.getPets(status);
+				String petsJSON = objectMapper.writeValueAsString(pets);
 				ApiUtil.setResponse(request, "application/json", petsJSON);
 				return new ResponseEntity<>(HttpStatus.OK);
 			} catch (JsonProcessingException e) {

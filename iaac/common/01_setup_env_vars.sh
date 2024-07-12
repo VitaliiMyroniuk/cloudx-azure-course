@@ -5,6 +5,7 @@ RESOURCE_GROUP_PERM="petstore-perm"
 RESOURCE_GROUP_TEMP="petstore-temp"
 LOCATION_1="eastus"
 LOCATION_2="westeurope"
+LOCATION_3="westus"
 WEB_APP="petstore-web-app"
 PRODUCT_SERVICE="petstore-product-svc"
 ORDER_SERVICE="petstore-order-svc"
@@ -37,3 +38,9 @@ BLOB_STORAGE_DATA_CONTRIBUTOR_ROLE="Storage Blob Data Contributor"
 
 # Function App
 FUNCTION_APP="petstore-order-items-reserver"
+
+# PostgreSQL
+POSTGRES_SERVER="petstore-server"
+POSTGRES_DB="petstore_db"
+POSTGRES_USER="vitalii"
+POSTGRES_PASSWORD="<to_be_added>"

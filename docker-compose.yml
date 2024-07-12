@@ -22,6 +22,7 @@ services:
       - "8081:8081"
     environment:
       - PETSTOREPETSERVICE_SERVER_PORT=8081
+      - SPRING_PROFILES_ACTIVE=local
     networks:
       - petstorebridge
 
@@ -32,6 +33,7 @@ services:
       - "8082:8082"
     environment:
       - PETSTOREPRODUCTSERVICE_SERVER_PORT=8082
+      - SPRING_PROFILES_ACTIVE=local
     networks:
       - petstorebridge
 
