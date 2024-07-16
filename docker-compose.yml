@@ -3,6 +3,7 @@ version: "3.9"
 services:
 
   petstoreapp:
+    container_name: petstore-web-app
     build:
       context: ./petstoreapp
     ports:
@@ -16,6 +17,7 @@ services:
       - petstorebridge
 
   petstorepetservice:
+    container_name: petstore-pet-svc
     build:
       context: ./petstorepetservice
     ports:
@@ -27,6 +29,7 @@ services:
       - petstorebridge
 
   petstoreproductservice:
+    container_name: petstore-product-svc
     build:
       context: ./petstoreproductservice
     ports:
@@ -38,6 +41,7 @@ services:
       - petstorebridge
 
   petstoreorderservice:
+    container_name: petstore-order-svc
     build:
       context: ./petstoreorderservice
     ports:
@@ -45,6 +49,8 @@ services:
     environment:
       - PETSTOREORDERSERVICE_SERVER_PORT=8083
       - PETSTOREPRODUCTSERVICE_URL=http://petstoreproductservice:8082
+      - SPRING_PROFILES_ACTIVE=local
+      - ENABLE_COSMOS_DB_EMULATOR=false
     networks:
       - petstorebridge
 

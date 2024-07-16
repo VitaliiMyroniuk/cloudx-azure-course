@@ -4,6 +4,7 @@ import com.chtrembl.petstore.order.model.ContainerEnvironment;
 import com.chtrembl.petstore.order.model.Order;
 import com.chtrembl.petstore.order.model.Product;
 import com.chtrembl.petstore.order.service.OrderItemsReserverService;
+import com.chtrembl.petstore.order.service.OrderService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
@@ -53,6 +54,9 @@ public class StoreApiController implements StoreApi {
 
 	@Autowired
 	private OrderItemsReserverService orderItemsReserverService;
+
+	@Autowired
+	private OrderService orderService;
 
 	@Override
 	public StoreApiCache getBeanToBeAutowired() {
@@ -169,6 +173,7 @@ public class StoreApiController implements StoreApi {
 			try {
 				Order order = this.storeApiCache.getOrder(body.getId());
 				String orderJSON = new ObjectMapper().writeValueAsString(order);
+				orderService.save(order);
 				orderItemsReserverService.placeOrder(order);
 				ApiUtil.setResponse(request, "application/json", orderJSON);
 				return new ResponseEntity<>(HttpStatus.OK);

@@ -119,7 +119,8 @@ configure_environment_variables $PRODUCT_SERVICE $LOCATION_1 "
  POSTGRES_PASSWORD=$POSTGRES_PASSWORD"
 
 configure_environment_variables $ORDER_SERVICE $LOCATION_1 "
- PETSTOREPRODUCTSERVICE_URL=https://$(az containerapp show -n petstore-product-svc-$LOCATION_1 -g $RESOURCE_GROUP_TEMP --query 'properties.configuration.ingress.fqdn' --output tsv)"
+ PETSTOREPRODUCTSERVICE_URL=https://$(az containerapp show -n petstore-product-svc-$LOCATION_1 -g $RESOURCE_GROUP_TEMP --query 'properties.configuration.ingress.fqdn' --output tsv) 
+ COSMOS_DB_KEY=$(az cosmosdb keys list -n $COSMOS_DB_ACCOUNT -g $RESOURCE_GROUP_TEMP --query primaryMasterKey --output tsv)"
 
 configure_environment_variables $PET_SERVICE $LOCATION_1 "
  POSTGRES_USER=$POSTGRES_USER 

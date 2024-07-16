@@ -19,6 +19,13 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  cloud:
+    azure:
+      cosmos:
+        enabled: true
+        endpoint: https://petstore-account.documents.azure.com:443/
+        key: ${COSMOS_DB_KEY}
+        database: petstore_db
 
 management:
   endpoints:

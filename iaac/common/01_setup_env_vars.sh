@@ -44,3 +44,7 @@ POSTGRES_SERVER="petstore-server"
 POSTGRES_DB="petstore_db"
 POSTGRES_USER="vitalii"
 POSTGRES_PASSWORD="<to_be_added>"
+
+#Cosmos DB
+COSMOS_DB_ACCOUNT="petstore-account"
+COSMOS_DB_DATABASE="petstore_db"

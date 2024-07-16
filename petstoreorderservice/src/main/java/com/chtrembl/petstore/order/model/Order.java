@@ -1,44 +1,44 @@
 package com.chtrembl.petstore.order.model;
 
+import com.azure.spring.data.cosmos.core.mapping.Container;
+import com.azure.spring.data.cosmos.core.mapping.PartitionKey;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 import javax.validation.Valid;
-
+import org.springframework.data.annotation.Id;
 import org.springframework.validation.annotation.Validated;
 import org.threeten.bp.OffsetDateTime;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
-
-import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Order
  */
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2021-12-23T15:16:30.446-05:00")
-
+@Container(containerName = "orders")
 public class Order implements Serializable {
-	@JsonProperty("id")
-	private String id = null;
 
-	@JsonProperty("email")
-	private String email = null;
+	@Id
+	private String id;
 
-	@JsonProperty("products")
+	@PartitionKey
+	private String email;
+
 	@Valid
-	private List<Product> products = null;
+	private List<Product> products;
 
-	@JsonProperty("shipDate")
-	private OffsetDateTime shipDate = null;
+	private OffsetDateTime shipDate;
 
-	@JsonProperty("tags")
 	@Valid
-	private List<Tag> tags = null;
+	private List<Tag> tags;
+
+	private StatusEnum status;
+
+	private Boolean complete;
 
 	/**
 	 * Order Status
@@ -72,12 +72,6 @@ public class Order implements Serializable {
 			return null;
 		}
 	}
-
-	@JsonProperty("status")
-	private StatusEnum status = null;
-
-	@JsonProperty("complete")
-	private Boolean complete = null;
 
 	public Order id(String id) {
 		this.id = id;
