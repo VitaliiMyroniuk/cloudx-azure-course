@@ -39,6 +39,7 @@ function create_container_app() {
     --scale-rule-name $name \
     --scale-rule-type http \
     --scale-rule-http-concurrency 10 \
+    --system-assigned \
     --output none
 
     echo "Created a Container App: $name"
@@ -114,17 +115,8 @@ configure_environment_variables $WEB_APP $LOCATION_1 "
  PETSTOREPRODUCTSERVICE_URL=https://$(az containerapp show -n petstore-product-svc-$LOCATION_1 -g $RESOURCE_GROUP_TEMP --query 'properties.configuration.ingress.fqdn' --output tsv) 
  PETSTOREORDERSERVICE_URL=https://$(az containerapp show -n petstore-order-svc-$LOCATION_1 -g $RESOURCE_GROUP_TEMP --query 'properties.configuration.ingress.fqdn' --output tsv)"
 
-configure_environment_variables $PRODUCT_SERVICE $LOCATION_1 "
- POSTGRES_USER=$POSTGRES_USER 
- POSTGRES_PASSWORD=$POSTGRES_PASSWORD"
-
 configure_environment_variables $ORDER_SERVICE $LOCATION_1 "
- PETSTOREPRODUCTSERVICE_URL=https://$(az containerapp show -n petstore-product-svc-$LOCATION_1 -g $RESOURCE_GROUP_TEMP --query 'properties.configuration.ingress.fqdn' --output tsv) 
- COSMOS_DB_KEY=$(az cosmosdb keys list -n $COSMOS_DB_ACCOUNT -g $RESOURCE_GROUP_TEMP --query primaryMasterKey --output tsv)"
-
-configure_environment_variables $PET_SERVICE $LOCATION_1 "
- POSTGRES_USER=$POSTGRES_USER 
- POSTGRES_PASSWORD=$POSTGRES_PASSWORD"
+ PETSTOREPRODUCTSERVICE_URL=https://$(az containerapp show -n petstore-product-svc-$LOCATION_1 -g $RESOURCE_GROUP_TEMP --query 'properties.configuration.ingress.fqdn' --output tsv)"
 
 #configure_multiple_revision_mode $WEB_APP $LOCATION_1
 #configure_multiple_revision_mode $PRODUCT_SERVICE $LOCATION_1

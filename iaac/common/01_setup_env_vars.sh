@@ -48,3 +48,9 @@ POSTGRES_PASSWORD="<to_be_added>"
 #Cosmos DB
 COSMOS_DB_ACCOUNT="petstore-account"
 COSMOS_DB_DATABASE="petstore_db"
+
+#Key Vault
+KEY_VAULT="petstore"
+KEY_VAULT_POSTGRES_USER_SECRET_URI="https://petstore.vault.azure.net/secrets/postgres-user"
+KEY_VAULT_POSTGRES_PASSWORD_SECRET_URI="https://petstore.vault.azure.net/secrets/postgres-password"
+KEY_VAULT_COSMOS_DB_KEY_SECRET_URI="https://petstore.vault.azure.net/secrets/cosmos-db-key"
