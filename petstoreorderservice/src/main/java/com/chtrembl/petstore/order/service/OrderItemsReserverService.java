@@ -1,6 +1,10 @@
 package com.chtrembl.petstore.order.service;
 
+import com.azure.messaging.servicebus.ServiceBusMessage;
+import com.azure.messaging.servicebus.ServiceBusSenderAsyncClient;
 import com.chtrembl.petstore.order.model.Order;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import static java.lang.String.format;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +25,10 @@ public class OrderItemsReserverService {
     private String petstoreOrderItemsReserverURL;
     @Autowired
     private RestTemplate restTemplate;
+    @Autowired
+    private ServiceBusSenderAsyncClient serviceBusSenderClient;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     public void placeOrder(Order order) {
         log.info("Going to reserve order {}", order);
@@ -30,5 +38,14 @@ public class OrderItemsReserverService {
         headers.add("session-id", "PetStoreOrderService");
         HttpEntity<Order> entity = new HttpEntity<>(order, headers);
         restTemplate.postForObject(format("%s/api/orders", petstoreOrderItemsReserverURL), entity, Order.class);
+    }
+
+    public void publishOrderAsync(Order order) throws JsonProcessingException {
+        log.info("Going to publish order {}", order);
+        String orderJson = objectMapper.writeValueAsString(order);
+        ServiceBusMessage message = new ServiceBusMessage(orderJson);
+        serviceBusSenderClient.sendMessage(message)
+                              .doOnError(error -> log.error("Failed to publish order {}", order))
+                              .subscribe();
     }
 }

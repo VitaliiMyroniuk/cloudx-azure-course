@@ -116,7 +116,8 @@ configure_environment_variables $WEB_APP $LOCATION_1 "
  PETSTOREORDERSERVICE_URL=https://$(az containerapp show -n petstore-order-svc-$LOCATION_1 -g $RESOURCE_GROUP_TEMP --query 'properties.configuration.ingress.fqdn' --output tsv)"
 
 configure_environment_variables $ORDER_SERVICE $LOCATION_1 "
- PETSTOREPRODUCTSERVICE_URL=https://$(az containerapp show -n petstore-product-svc-$LOCATION_1 -g $RESOURCE_GROUP_TEMP --query 'properties.configuration.ingress.fqdn' --output tsv)"
+ PETSTOREPRODUCTSERVICE_URL=https://$(az containerapp show -n petstore-product-svc-$LOCATION_1 -g $RESOURCE_GROUP_TEMP --query 'properties.configuration.ingress.fqdn' --output tsv) 
+ PETSTORE_ORDER_ITEMS_RESERVER_URL=https://$FUNCTION_APP.azurewebsites.net"
 
 #configure_multiple_revision_mode $WEB_APP $LOCATION_1
 #configure_multiple_revision_mode $PRODUCT_SERVICE $LOCATION_1

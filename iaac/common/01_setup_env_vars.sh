@@ -54,3 +54,9 @@ KEY_VAULT="petstore"
 KEY_VAULT_POSTGRES_USER_SECRET_URI="https://petstore.vault.azure.net/secrets/postgres-user"
 KEY_VAULT_POSTGRES_PASSWORD_SECRET_URI="https://petstore.vault.azure.net/secrets/postgres-password"
 KEY_VAULT_COSMOS_DB_KEY_SECRET_URI="https://petstore.vault.azure.net/secrets/cosmos-db-key"
+KEY_VAULT_SERVICE_BUS_CONNECTION_STRING_SECRET_URI="https://petstore.vault.azure.net/secrets/service-bus-connection-string"
+
+#Service Bus
+SERVICE_BUS_NAMESPACE="petstore-app"
+SERVICE_BUS_QUEUE="orders"
+SERVICE_BUS_DATA_OWNER_ROLE="Azure Service Bus Data Owner"

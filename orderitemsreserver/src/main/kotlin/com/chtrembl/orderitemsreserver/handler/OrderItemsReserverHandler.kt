@@ -15,6 +15,7 @@ import com.microsoft.azure.functions.HttpStatus.OK
 import com.microsoft.azure.functions.annotation.AuthorizationLevel.ANONYMOUS
 import com.microsoft.azure.functions.annotation.FunctionName
 import com.microsoft.azure.functions.annotation.HttpTrigger
+import com.microsoft.azure.functions.annotation.ServiceBusQueueTrigger
 import java.util.logging.Level.SEVERE
 import java.util.logging.Level.WARNING
 
@@ -24,7 +25,7 @@ class OrderItemsReserverHandler(
 ) {
 
     @FunctionName("orders")
-    fun handle(
+    fun handleHttpTrigger(
         @HttpTrigger(
             name = "request",
             methods = [POST],
@@ -51,5 +52,24 @@ class OrderItemsReserverHandler(
                     request.createResponseBuilder(INTERNAL_SERVER_ERROR).build()
                 }
             }
+        }
+
+    @FunctionName("service-bus-orders")
+    fun handleServiceBusQueueTrigger(
+        @ServiceBusQueueTrigger(
+            name = "order",
+            queueName = "orders",
+            connection = "AzureWebJobsServiceBus"
+        )
+        orderEvent: String,
+        context: ExecutionContext
+    ): Unit =
+        runCatching {
+            context.logger.info("Going to handle order event: $orderEvent")
+            val order = objectMapper.readValue(orderEvent, Order::class.java)
+            blobIntegrationService.upload(order)
+        }.getOrElse {
+            context.logger.log(SEVERE, "Failed to handle order event: $orderEvent", it)
+            throw it
         }
 }

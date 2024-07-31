@@ -50,6 +50,7 @@ azurefunctions {
         put("AZURE_STORAGE_ENDPOINT", "https://petstorestorage.blob.core.windows.net")
         put("AZURE_STORAGE_MAX_RETRIES", "2")
         put("AZURE_STORAGE_RETRY_TIMEOUT_SEC", "5")
+        put("AzureWebJobsServiceBus__fullyQualifiedNamespace", "petstore-app.servicebus.windows.net")
     })
     setAuth(closureOf<com.microsoft.azure.gradle.auth.GradleAuthConfig> {
         type = "azure_cli"

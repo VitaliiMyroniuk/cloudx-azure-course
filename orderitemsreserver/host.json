@@ -4,5 +4,16 @@
     "id": "Microsoft.Azure.Functions.ExtensionBundle",
     "version": "[4.*, 5.0.0)"
   },
-  "functionTimeout": "00:00:30"
+  "functionTimeout": "00:00:30",
+  "extensions": {
+    "serviceBus": {
+      "clientRetryOptions":{
+        "mode": "fixed",
+        "tryTimeout": "00:00:05",
+        "delay": "00:00:00.80",
+        "maxDelay": "00:00:01",
+        "maxRetries": 3
+      }
+    }
+  }
 }

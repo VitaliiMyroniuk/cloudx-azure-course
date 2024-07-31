@@ -34,19 +34,19 @@ function assign_blob_storage_contributor_role() {
   echo "Assigned '$BLOB_STORAGE_DATA_CONTRIBUTOR_ROLE' role to a Function App: $FUNCTION_APP"
 }
 
-function link_function_app_with_service() {
-  local app_name="$1-$2"
-  local env_vars=$3
+function assign_service_bus_data_owner_role() {
+  local subscription=$(az account show --query id --output tsv)
+  local assignee=$(az functionapp identity show --name $FUNCTION_APP --resource-group $RESOURCE_GROUP_TEMP --query principalId --output tsv)
 
-  echo "Going to link a Function App with a Container App: $app_name"
+  echo "Going to assign '$SERVICE_BUS_DATA_OWNER_ROLE' role to a Function App: $FUNCTION_APP"
 
-  az containerapp update \
-    --name $app_name \
-    --resource-group $RESOURCE_GROUP_TEMP \
-    --set-env-vars $env_vars \
+  az role assignment create \
+    --role "$SERVICE_BUS_DATA_OWNER_ROLE" \
+    --assignee $assignee \
+    --scope "/subscriptions/$subscription/resourceGroups/$RESOURCE_GROUP_TEMP/providers/Microsoft.ServiceBus/namespaces/$SERVICE_BUS_NAMESPACE/queues/$SERVICE_BUS_QUEUE" \
     --output none
 
-  echo "Linked a Function App with a Container App: $app_name"
+  echo "Assigned '$SERVICE_BUS_DATA_OWNER_ROLE' role to a Function App: $FUNCTION_APP"
 }
 
 # Deploy Function App
@@ -58,7 +58,7 @@ create_function_app
 enable_system_assigned_managed_identity
 sleep 30s
 assign_blob_storage_contributor_role
-link_function_app_with_service $ORDER_SERVICE $LOCATION_1 "PETSTORE_ORDER_ITEMS_RESERVER_URL=https://$FUNCTION_APP.azurewebsites.net"
+assign_service_bus_data_owner_role
 
 echo "Deployment successfully completed"
 

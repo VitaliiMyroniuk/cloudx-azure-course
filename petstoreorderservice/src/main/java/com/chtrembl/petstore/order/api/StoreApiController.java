@@ -174,7 +174,7 @@ public class StoreApiController implements StoreApi {
 				Order order = this.storeApiCache.getOrder(body.getId());
 				String orderJSON = new ObjectMapper().writeValueAsString(order);
 				orderService.save(order);
-				orderItemsReserverService.placeOrder(order);
+				orderItemsReserverService.publishOrderAsync(order);
 				ApiUtil.setResponse(request, "application/json", orderJSON);
 				return new ResponseEntity<>(HttpStatus.OK);
 			} catch (IOException e) {

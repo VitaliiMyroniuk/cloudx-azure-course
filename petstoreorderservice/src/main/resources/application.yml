@@ -26,6 +26,12 @@ spring:
         endpoint: https://petstore-account.documents.azure.com:443/
         key: ${COSMOS_DB_KEY}
         database: petstore_db
+      servicebus:
+        enabled: true
+        namespace: ${SERVICE_BUS_NAMESPACE:petstore-app}
+        entity-name: ${SERVICE_BUS_QUEUE:orders}
+        entity-type: queue
+        connection-string: ${SERVICE_BUS_CONNECTION_STRING:}
 
 management:
   endpoints:

@@ -83,6 +83,12 @@ create_key_vault
 add_secret_to_key_vault postgres-user $POSTGRES_USER
 add_secret_to_key_vault postgres-password $POSTGRES_PASSWORD
 add_secret_to_key_vault cosmos-db-key $(az cosmosdb keys list -n $COSMOS_DB_ACCOUNT -g $RESOURCE_GROUP_TEMP --query primaryMasterKey --output tsv)
+add_secret_to_key_vault service-bus-connection-string $(az servicebus namespace authorization-rule keys list \
+                                                        --resource-group $RESOURCE_GROUP_TEMP \
+                                                        --namespace-name $SERVICE_BUS_NAMESPACE \
+                                                        --name RootManageSharedAccessKey \
+                                                        --query primaryConnectionString \
+                                                        --output tsv)
 
 set_key_vault_policy $(az containerapp identity show -n $PET_SERVICE-$LOCATION_1 -g $RESOURCE_GROUP_TEMP --query principalId --output tsv)
 set_key_vault_policy $(az containerapp identity show -n $PRODUCT_SERVICE-$LOCATION_1 -g $RESOURCE_GROUP_TEMP --query principalId --output tsv)
@@ -97,7 +103,8 @@ add_sectrets_to_container_app "$PRODUCT_SERVICE-$LOCATION_1" "
  postgres-password=keyvaultref:$KEY_VAULT_POSTGRES_PASSWORD_SECRET_URI,identityref:system"
 
 add_sectrets_to_container_app "$ORDER_SERVICE-$LOCATION_1" "
- cosmos-db-key=keyvaultref:$KEY_VAULT_COSMOS_DB_KEY_SECRET_URI,identityref:system"
+ cosmos-db-key=keyvaultref:$KEY_VAULT_COSMOS_DB_KEY_SECRET_URI,identityref:system 
+ service-bus-connection-string=keyvaultref:$KEY_VAULT_SERVICE_BUS_CONNECTION_STRING_SECRET_URI,identityref:system"
 
 add_env_vars_to_container_app "$PET_SERVICE-$LOCATION_1" "
  POSTGRES_USER=secretref:postgres-user 
@@ -108,6 +115,7 @@ add_env_vars_to_container_app "$PRODUCT_SERVICE-$LOCATION_1" "
  POSTGRES_PASSWORD=secretref:postgres-password"
 
 add_env_vars_to_container_app "$ORDER_SERVICE-$LOCATION_1" "
- COSMOS_DB_KEY=secretref:cosmos-db-key"
+ COSMOS_DB_KEY=secretref:cosmos-db-key 
+ SERVICE_BUS_CONNECTION_STRING=secretref:service-bus-connection-string"
 
 echo "Deployment successfully completed"
