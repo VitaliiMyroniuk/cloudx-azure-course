@@ -1,0 +1,76 @@
+{
+  "definition": {
+    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+    "contentVersion": "1.0.0.0",
+    "triggers": {
+      "When_a_message_is_received_in_a_queue_(auto-complete)": {
+        "type": "ApiConnection",
+        "inputs": {
+          "host": {
+            "connection": {
+              "name": "@parameters('$connections')['servicebus']['connectionId']"
+            }
+          },
+          "method": "get",
+          "path": "/@{encodeURIComponent(encodeURIComponent('orders'))}/messages/head",
+          "queries": {
+            "queueType": "DeadLetter"
+          }
+        },
+        "recurrence": {
+          "interval": 1,
+          "frequency": "Minute"
+        }
+      }
+    },
+    "actions": {
+      "Send_an_email_(V2)": {
+        "type": "ApiConnection",
+        "inputs": {
+          "host": {
+            "connection": {
+              "name": "@parameters('$connections')['office365']['connectionId']"
+            }
+          },
+          "method": "post",
+          "body": {
+            "To": "vitalii_myroniuk@epam.com",
+            "Subject": "Order Reservation Failure",
+            "Body": "<p>Failed to reserve an order:</p><br><p>@{base64ToString(triggerBody()?['ContentData'])}</p><br><p>Please, reserve the order manually</p>",
+            "Importance": "Normal"
+          },
+          "path": "/v2/Mail"
+        },
+        "runAfter": {}
+      }
+    },
+    "outputs": {},
+    "parameters": {
+      "$connections": {
+        "type": "Object",
+        "defaultValue": {}
+      }
+    }
+  },
+  "parameters": {
+    "$connections": {
+      "value": {
+        "servicebus": {
+          "id": "/subscriptions/5d44d28c-6e92-40c3-b5bd-dc691900eed2/providers/Microsoft.Web/locations/eastus/managedApis/servicebus",
+          "connectionId": "/subscriptions/5d44d28c-6e92-40c3-b5bd-dc691900eed2/resourceGroups/petstore-temp/providers/Microsoft.Web/connections/servicebus",
+          "connectionName": "servicebus",
+          "connectionProperties": {
+            "authentication": {
+              "type": "ManagedServiceIdentity"
+            }
+          }
+        },
+        "office365": {
+          "id": "/subscriptions/5d44d28c-6e92-40c3-b5bd-dc691900eed2/providers/Microsoft.Web/locations/eastus/managedApis/office365",
+          "connectionId": "/subscriptions/5d44d28c-6e92-40c3-b5bd-dc691900eed2/resourceGroups/petstore-temp/providers/Microsoft.Web/connections/office365",
+          "connectionName": "office365"
+        }
+      }
+    }
+  }
+}

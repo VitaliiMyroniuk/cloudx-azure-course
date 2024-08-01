@@ -60,3 +60,6 @@ KEY_VAULT_SERVICE_BUS_CONNECTION_STRING_SECRET_URI="https://petstore.vault.azure
 SERVICE_BUS_NAMESPACE="petstore-app"
 SERVICE_BUS_QUEUE="orders"
 SERVICE_BUS_DATA_OWNER_ROLE="Azure Service Bus Data Owner"
+
+#Logic App
+LOGIC_APP_WORKFLOW="petstore-app"
