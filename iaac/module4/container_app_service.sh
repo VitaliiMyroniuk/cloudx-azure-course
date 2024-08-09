@@ -111,6 +111,7 @@ configure_ingress_settings $ORDER_SERVICE $LOCATION_1
 configure_ingress_settings $PET_SERVICE $LOCATION_1
 
 configure_environment_variables $WEB_APP $LOCATION_1 "
+ PETSTORE_APP_URL=https://$(az containerapp show -n petstore-web-app-$LOCATION_1 -g $RESOURCE_GROUP_TEMP --query 'properties.configuration.ingress.fqdn' --output tsv) 
  PETSTOREPETSERVICE_URL=https://$(az containerapp show -n petstore-pet-svc-$LOCATION_1 -g $RESOURCE_GROUP_TEMP --query 'properties.configuration.ingress.fqdn' --output tsv) 
  PETSTOREPRODUCTSERVICE_URL=https://$(az containerapp show -n petstore-product-svc-$LOCATION_1 -g $RESOURCE_GROUP_TEMP --query 'properties.configuration.ingress.fqdn' --output tsv) 
  PETSTOREORDERSERVICE_URL=https://$(az containerapp show -n petstore-order-svc-$LOCATION_1 -g $RESOURCE_GROUP_TEMP --query 'properties.configuration.ingress.fqdn' --output tsv)"

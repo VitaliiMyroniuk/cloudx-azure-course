@@ -80,6 +80,8 @@ source ../common/03_temp_resource_group.sh create
 
 create_key_vault
 
+add_secret_to_key_vault ad-b2c-client-id $AD_B2C_CLIENT_ID
+add_secret_to_key_vault ad-b2c-client-secret $AD_B2C_CLIENT_SECRET
 add_secret_to_key_vault postgres-user $POSTGRES_USER
 add_secret_to_key_vault postgres-password $POSTGRES_PASSWORD
 add_secret_to_key_vault cosmos-db-key $(az cosmosdb keys list -n $COSMOS_DB_ACCOUNT -g $RESOURCE_GROUP_TEMP --query primaryMasterKey --output tsv)
@@ -90,9 +92,14 @@ add_secret_to_key_vault service-bus-connection-string $(az servicebus namespace 
                                                         --query primaryConnectionString \
                                                         --output tsv)
 
+set_key_vault_policy $(az containerapp identity show -n $WEB_APP-$LOCATION_1 -g $RESOURCE_GROUP_TEMP --query principalId --output tsv)
 set_key_vault_policy $(az containerapp identity show -n $PET_SERVICE-$LOCATION_1 -g $RESOURCE_GROUP_TEMP --query principalId --output tsv)
 set_key_vault_policy $(az containerapp identity show -n $PRODUCT_SERVICE-$LOCATION_1 -g $RESOURCE_GROUP_TEMP --query principalId --output tsv)
 set_key_vault_policy $(az containerapp identity show -n $ORDER_SERVICE-$LOCATION_1 -g $RESOURCE_GROUP_TEMP --query principalId --output tsv)
+
+add_sectrets_to_container_app "$WEB_APP-$LOCATION_1" "
+ ad-b2c-client-id=keyvaultref:$KEY_VAULT_AD_B2C_CLIENT_ID_SECRET_URI,identityref:system 
+ ad-b2c-client-secret=keyvaultref:$KEY_VAULT_AD_B2C_CLIENT_SECRET_SECRET_URI,identityref:system"
 
 add_sectrets_to_container_app "$PET_SERVICE-$LOCATION_1" "
  postgres-user=keyvaultref:$KEY_VAULT_POSTGRES_USER_SECRET_URI,identityref:system 
@@ -105,6 +112,10 @@ add_sectrets_to_container_app "$PRODUCT_SERVICE-$LOCATION_1" "
 add_sectrets_to_container_app "$ORDER_SERVICE-$LOCATION_1" "
  cosmos-db-key=keyvaultref:$KEY_VAULT_COSMOS_DB_KEY_SECRET_URI,identityref:system 
  service-bus-connection-string=keyvaultref:$KEY_VAULT_SERVICE_BUS_CONNECTION_STRING_SECRET_URI,identityref:system"
+
+add_env_vars_to_container_app "$WEB_APP-$LOCATION_1" "
+ AD_B2C_CLIENT_ID=secretref:ad-b2c-client-id 
+ AD_B2C_CLIENT_SECRET=secretref:ad-b2c-client-secret"
 
 add_env_vars_to_container_app "$PET_SERVICE-$LOCATION_1" "
  POSTGRES_USER=secretref:postgres-user 

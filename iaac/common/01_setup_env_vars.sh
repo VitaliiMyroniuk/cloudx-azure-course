@@ -55,6 +55,8 @@ KEY_VAULT_POSTGRES_USER_SECRET_URI="https://petstore.vault.azure.net/secrets/pos
 KEY_VAULT_POSTGRES_PASSWORD_SECRET_URI="https://petstore.vault.azure.net/secrets/postgres-password"
 KEY_VAULT_COSMOS_DB_KEY_SECRET_URI="https://petstore.vault.azure.net/secrets/cosmos-db-key"
 KEY_VAULT_SERVICE_BUS_CONNECTION_STRING_SECRET_URI="https://petstore.vault.azure.net/secrets/service-bus-connection-string"
+KEY_VAULT_AD_B2C_CLIENT_ID_SECRET_URI="https://petstore.vault.azure.net/secrets/ad-b2c-client-id"
+KEY_VAULT_AD_B2C_CLIENT_SECRET_SECRET_URI="https://petstore.vault.azure.net/secrets/ad-b2c-client-secret"
 
 #Service Bus
 SERVICE_BUS_NAMESPACE="petstore-app"
@@ -63,3 +65,8 @@ SERVICE_BUS_DATA_OWNER_ROLE="Azure Service Bus Data Owner"
 
 #Logic App
 LOGIC_APP_WORKFLOW="petstore-app"
+
+# Azure Active Directory B2C
+AD_B2C_CLIENT_ID="<to_be_added>"
+AD_B2C_CLIENT_SECRET="<to_be_added>"
+
