@@ -26,12 +26,12 @@ function create_storage_container() {
 }
 
 # Deploy Blob Storage
-echo "Start deployment..."
+echo "Started blob_storage.sh"
 
 source ../common/03_temp_resource_group.sh create
 
 create_storage_account
 create_storage_container
 
-echo "Deployment successfully completed"
+echo "Completed blob_storage.sh"
 

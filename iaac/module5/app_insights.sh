@@ -31,7 +31,7 @@ function enable_app_insights_for_service() {
 }
 
 # Deploy App Insights for the pet store application
-echo "Start deployment..."
+echo "Started app_insights.sh"
 
 source ../common/01_setup_env_vars.sh
 
@@ -44,5 +44,5 @@ enable_app_insights_for_service $PRODUCT_SERVICE $LOCATION_1 "APPLICATIONINSIGHT
 enable_app_insights_for_service $ORDER_SERVICE $LOCATION_1 "APPLICATIONINSIGHTS_CONNECTION_STRING=$APP_INSIGHTS_CONNECTION_STRING"
 enable_app_insights_for_service $PET_SERVICE $LOCATION_1 "APPLICATIONINSIGHTS_CONNECTION_STRING=$APP_INSIGHTS_CONNECTION_STRING"
 
-echo "Deployment successfully completed"
+echo "Completed app_insights.sh"
 

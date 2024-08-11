@@ -42,7 +42,7 @@ function create_cosmos_db_container() {
 }
 
 # Deploy CosmosDB
-echo "Start deployment..."
+echo "Started cosmos_db.sh"
 
 source ../common/03_temp_resource_group.sh create
 
@@ -50,5 +50,5 @@ create_cosmos_db_account
 create_cosmos_db_database
 create_cosmos_db_container "orders" "/email"
 
-echo "Deployment successfully completed"
+echo "Completed cosmos_db.sh"
 

@@ -50,7 +50,7 @@ function assign_service_bus_data_owner_role() {
 }
 
 # Deploy Function App
-echo "Start deployment..."
+echo "Started function_app.sh"
 
 source ../common/03_temp_resource_group.sh create
 
@@ -60,5 +60,5 @@ sleep 30s
 assign_blob_storage_contributor_role
 assign_service_bus_data_owner_role
 
-echo "Deployment successfully completed"
+echo "Completed function_app.sh"
 

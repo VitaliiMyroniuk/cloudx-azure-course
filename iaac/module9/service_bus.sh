@@ -27,12 +27,12 @@ function create_service_bus_queue() {
 }
 
 # Deploy Service Bus
-echo "Start deployment..."
+echo "Started service_bus.sh"
 
 source ../common/03_temp_resource_group.sh create
 
 create_service_bus_namespace
 create_service_bus_queue
 
-echo "Deployment successfully completed"
+echo "Completed service_bus.sh"
 

@@ -21,11 +21,11 @@ function create_postgres_flexible_server() {
 }
 
 # Deploy PostgreSQL
-echo "Start deployment..."
+echo "Started postgres_db.sh"
 
 source ../common/03_temp_resource_group.sh create
 
 create_postgres_flexible_server
 
-echo "Deployment successfully completed"
+echo "Completed postgres_db.sh"
 

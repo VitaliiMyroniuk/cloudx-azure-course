@@ -14,11 +14,11 @@ function create_logic_app_workflow() {
 }
 
 # Deploy Logic App
-echo "Start deployment..."
+echo "Started logic_app.sh"
 
 source ../common/03_temp_resource_group.sh create
 
 create_logic_app_workflow
 
-echo "Deployment successfully completed"
+echo "Completed logic_app.sh"
 

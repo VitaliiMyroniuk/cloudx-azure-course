@@ -74,7 +74,7 @@ function add_env_vars_to_container_app() {
 }
 
 # Deploy Key Vault
-echo "Start deployment..."
+echo "Started key_vault.sh"
 
 source ../common/03_temp_resource_group.sh create
 
@@ -129,4 +129,4 @@ add_env_vars_to_container_app "$ORDER_SERVICE-$LOCATION_1" "
  COSMOS_DB_KEY=secretref:cosmos-db-key 
  SERVICE_BUS_CONNECTION_STRING=secretref:service-bus-connection-string"
 
-echo "Deployment successfully completed"
+echo "Completed key_vault.sh"

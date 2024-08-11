@@ -118,7 +118,7 @@ function enable_continuous_deployment() {
 }
 
 # Deploy the pet store application
-echo "Start deployment..."
+echo "Started web_app_service.sh"
 
 source ../common/03_temp_resource_group.sh create
 
@@ -147,5 +147,5 @@ create_autoscale_rule $WEB_APP $LOCATION_1 "CpuPercentage < 20 avg 5m" "out 1"
 
 #enable_continuous_deployment $WEB_APP $LOCATION_1
 
-echo "Deployment successfully completed"
+echo "Completed web_app_service.sh"
 

@@ -92,7 +92,7 @@ function configure_multiple_revision_mode() {
 }
 
 # Deploy the pet store application
-echo "Start deployment..."
+echo "Started container_app_service.sh"
 
 source ../common/03_temp_resource_group.sh create
 
@@ -125,5 +125,5 @@ configure_environment_variables $ORDER_SERVICE $LOCATION_1 "
 #configure_multiple_revision_mode $ORDER_SERVICE $LOCATION_1
 #configure_multiple_revision_mode $PET_SERVICE $LOCATION_1
 
-echo "Deployment successfully completed"
+echo "Completed container_app_service.sh"
 

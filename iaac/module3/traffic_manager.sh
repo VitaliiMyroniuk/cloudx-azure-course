@@ -39,11 +39,11 @@ function create_traffic_manager_endpoint() {
 
 
 # Deploy the traffic manager for the pet store web application
-echo "Start deployment..."
+echo "Started traffic_manager.sh"
 
 create_traffic_manager_profile
 create_traffic_manager_endpoint $WEB_APP $LOCATION_1 1
 create_traffic_manager_endpoint $WEB_APP $LOCATION_2 2
 
-echo "Deployment successfully completed"
+echo "Completed traffic_manager.sh"
 
